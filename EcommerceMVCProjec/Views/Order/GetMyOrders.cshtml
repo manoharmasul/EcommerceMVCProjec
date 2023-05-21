@@ -1,0 +1,121 @@
+﻿@model IEnumerable<EcommerceProject.Models.GetOrder>
+
+  
+@{
+
+<br />
+<br />
+<br />
+<br />
+    int x = ViewBag.num;
+    if (x == 1)
+    {
+        <script>
+
+            alert("  Order Placed Successfully....!  ")
+
+        </script>
+    }
+
+
+
+        @foreach (var item in Model)
+        {
+        string[] str = (item.ImageUrl).Split(",");
+        
+        <div class="row mt-5">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="card">                               
+                        <div class="row">
+                            <div class="card-title">
+                                <h5 class="text-center mt-3">OPPO Find X - Edge To Edge Screen </h5>
+                            </div>
+                            <div class="col-4"></div>
+                            <div class="col-2">
+                                <img src="@str[0]" width="100%" height="150" class="col ml-auto">
+                            </div>
+                            <div class="col-5">
+                                <ul clas="ms-0">
+                                    <li class="mb-3 me-1"><strong>Shipping_Address : </strong>@item.ShippingAddress</li>
+                                    <li class="mb-3 me-1"><strong>Order_Statusy :</strong>@item.OrderStatus</li>
+                                    <span class="dots">...</span>
+                                    <span class="more" style="display:none">
+                                        <li class="mb-3 me-1"><strong>Billing_Address : </strong>@item.BillingAddress</li>
+                                        <li class="mb-3 me-1"><strong>Order_Date : </strong>@item.OrderDate</li>
+                                        <li class="mb-3 me-1"><strong>MobileNo : </strong>@item.MobileNo</li>
+                                        <li class="mb-3 me-1"><strong>Quantity : </strong> 1</li>
+                                        <li class="mb-3 me-1"><strong>Total_Ammount : </strong>@item.TotalAmmount</li>                                                                                   </span>
+                                </ul>
+
+                               @*Ready For Dispatched,Dispatched,Delivered*@
+                            @if (item.OrderStatus == "Dispatched" )
+                                {
+
+                                <form asp-action="UpdateOrderStatuss" class="mb-3 ms-3" style="float:left">
+                                      <input name="Id" value="@item.Id" hidden>
+
+                                    <button type="submit" value="UpdateOrderStatuss" class="youBtn btn btn-outline-primary" Active>Recived</button>
+                                    </form>
+                                    
+                                }
+                                else
+                                {
+                                <form asp-action="UpdateOrderStatuss" class="mb-3 ms-3" style="float:left">
+                                    <input name="Id" value="@item.Id" hidden>
+
+                                    <button type="submit" value="UpdateOrderStatuss" class="youBtn btn btn-outline-primary" disabled>Recived</button>
+                                </form>
+                                }
+
+                                    
+                              
+                                <button class="myBtn btn btn-outline-warning mb-3 ms-3 me-5" style="float:right">see more</button>
+                               </div>
+                        <div class="col-1"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+          
+           
+
+        }
+    
+
+
+
+
+
+
+    <script>
+        var moreBtn = document.getElementsByClassName("myBtn");
+
+        var toggleMoreText = function () {
+
+        const parent = this.parentElement,
+        moreText = parent.getElementsByClassName("more")[0],
+        btnMore = parent.getElementsByClassName("myBtn")[0],
+        dots = parent.getElementsByClassName('dots')[0];
+        // console.log(moreText.textContent);
+        if (dots.style.display === "none") {
+        dots.style.display = "block";
+        btnMore.innerHTML = "see more";
+        moreText.style.display = "none";
+        } 
+        else 
+        {
+        dots.style.display = "none";
+        btnMore.innerHTML = "see less";
+        moreText.style.display = "block";
+        }
+        };
+
+        for (var i = 0; i < moreBtn.length; i++) {
+        moreBtn[i].addEventListener('click', toggleMoreText, false);
+        }
+    </script>
+}
+

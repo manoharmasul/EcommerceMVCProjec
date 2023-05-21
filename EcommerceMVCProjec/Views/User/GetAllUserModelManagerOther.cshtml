@@ -1,0 +1,170 @@
+﻿@model EcommerceProject.Models.GetAllUserModelManagerOther
+
+@{
+    ViewData["Title"] = "GetAllUserModelManagerOther";
+}
+
+<h1>Index</h1>
+<br />
+<br />
+
+<p>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <button class="btn btn-primary" id="mmm">
+               View All Employees
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-primary" id="">
+                View Network
+            </button>
+        </div>
+        <div class="col">
+            <a asp-action="AddEmployee" class="btn btn-primary" style="">
+                Add New Employee
+            </a>
+        </div>
+    </div>
+</p>
+<br />
+@{
+    var count = 0;
+   
+        
+        
+       <div id="changeid">
+            <table class="table" id="one">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            UserName
+                        </th>
+                        <th>
+                            EmailId
+                        </th>
+                        <th>
+                            MobileNo
+                        </th>
+                        <th>
+                            Gender
+                        </th>
+                        <th>
+                            Role
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.managerlist)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmailId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MobileNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Gender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Role)
+                            </td>
+                            <td>
+
+
+                            @Html.ActionLink("View Networks", "AssignLocationsToManager", new {@class="btn btn-primary m-2 mb-3",id="network", data_val="abc"} , new {  id=item.Id})
+                            
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+       </div>
+        }
+        <div id="two" hidden>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            UserName
+                        </th>
+                        <th>
+                            EmailId
+                        </th>
+                        <th>
+                            MobileNo
+                        </th>
+                        <th>
+                            Gender
+                        </th>
+                        <th>
+                            Role
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.allemployeelist)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmailId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MobileNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Gender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Role)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+</div>
+    
+
+<script>
+    console.log(document.getElementById('mmm'))
+
+    document.getElementById('mmm').addEventListener('click', function () {
+        console.log('yes')
+        var changeelement = document.getElementById('changeid');
+        var twoTable = document.getElementById('two').innerHTML;
+        changeelement.innerHTML = twoTable;
+    })
+</script>
+<!-- Include the FontAwesome CSS file -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">

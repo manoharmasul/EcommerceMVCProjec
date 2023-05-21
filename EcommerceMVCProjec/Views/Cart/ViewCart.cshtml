@@ -1,0 +1,49 @@
+﻿@model IEnumerable<EcommerceProject.Models.ProductAdd>
+
+@{
+    ViewData["Title"] = "ViewCart";
+}
+
+<h4 class="text-center">ViewCart</h4>
+
+<hr />
+<br />
+<br />
+@foreach (var item in Model)
+{
+    string descrip = item.Description;
+    string[] des = descrip.Split(".");
+    string d1 = des[0];
+    string d2 = des[1];
+    string d3 = des[2];
+
+    string str = item.ImageUrl;
+    string[] strs = str.Split(",");
+    string imgs = strs[0];
+
+    <hr />
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3">
+            <img src="@imgs" alt="book images" class="mt-2 mb-2 ms-5 x-5" width="150" height="200">
+        </div>
+        <div class="col-4">
+            <h5>@item.ProductName</h5>
+            <ul>
+                <li>@d1</li>
+                <li>@d2</li>
+                <li>@d3</li>
+            </ul>
+            <span class="badge bg-warning text-dark">  <h-5><strong>Rs</strong> : @item.SellingPrice -/ </h-5> </span>
+        </div>
+        <div class="col-3">
+
+            @Html.ActionLink("View Details","Details", "Product", new {  id=item.Id },new{@class="btn btn-primary mx-1 my-5", @style="float left"})
+            @Html.ActionLink("Products", "Index","Product", new {  productsid=item.Id },new{@class="btn btn-info mx-1 my-5",@style="float: left;"})
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <hr />
+}
+
+

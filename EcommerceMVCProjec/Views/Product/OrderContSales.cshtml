@@ -1,0 +1,133 @@
+﻿@model EcommerceProject.Models.GetProductsOrderCount
+
+@{
+    ViewData["Title"] = "OrderContSales";
+}
+@{
+    var count = 0;
+
+    <div class="home-content">
+                    <div class="overview-boxes">
+                        <div class="box">
+                            <div class="right-side">
+                                <div class="box-topic">Total Order</div>
+                                <div class="number">@Model.OrderCount</div>
+                                <div class="indicator">
+                                    <i class='bx bx-up-arrow-alt'></i>
+                                    <span class="text">Up from yesterday</span>
+                                </div>
+                            </div>
+                            <i class='bx bx-cart-alt cart'></i>
+                        </div>
+                        <div class="box">
+                            <div class="right-side">
+                                <div class="box-topic">Total Sales</div>
+                                <div class="number">@Model.TotalSales</div>
+                                <div class="indicator">
+                                    <i class='bx bx-up-arrow-alt'></i>
+                                    <span class="text">Up from yesterday</span>
+                                </div>
+                            </div>
+                            <i class='bx bxs-cart-add cart two'></i>
+                        </div>
+                        <div class="box">
+                            <div class="right-side">
+                                <div class="box-topic">Total Profit</div>
+                                <div class="number">@Model.TotalProfite</div>
+                                <div class="indicator">
+                                    <i class='bx bx-up-arrow-alt'></i>
+                                    <span class="text">Up from yesterday</span>
+                                </div>
+                            </div>
+                            <i class='bx bx-cart cart three'></i>
+                        </div>
+                        <div class="box">
+                            <div class="right-side">
+                                <div class="box-topic">Order Pending</div>
+                                <div class="number">@Model.OrderPendings</div>
+                                <div class="indicator">
+                                    <i class='bx bx-down-arrow-alt down'></i>
+                                    <span class="text">Down From Today</span>
+                                </div>
+                            </div>
+                            <i class='bx bxs-cart-download cart four'></i>
+                        </div>
+                    </div>
+
+                    <div class="sales-boxes">
+                        <div class="recent-sales box">
+                            <div class="title">Stock Details</div>
+                            <div class="sales-details">
+                            <div class="row mt-3">
+                                 
+                                 <div class="col-5">
+                            <ul class="details">
+                                <li class="topic"><h4>Products</h4></li>
+                                       @foreach (var item in Model.proavailability)
+                                        {
+
+                                        <li ><a href="#">@item.ProductType</a></li>
+
+                                        }
+
+                                    </ul>
+                                 </div>
+                              <div class="col-2"></div>
+                               <div class="col-5">
+                                    <ul class="details">
+                                <li class="topic"><h4>Available</h4></li>
+                                       @foreach (var item in Model.proavailability)
+                                       {
+
+                                        <li><a href="#">@item.Available</a></li>
+
+                                       }
+                                    </ul>
+                                    <div class="button ms-4" >
+                                        <a href="#">See All</a>
+                                    </div>
+                                 </div>
+                             
+                              </div>
+                                                  
+                            </div>
+                            
+                        </div>
+                        <div class="recent-sales box">
+                            <div class="title mb-2">Top Seling Items</div>
+                            <div class="sales-details">                                            
+                            <ul class="top-sales-details">
+                              
+                                <li>
+                                    <div class=row>
+
+                                        <div class="col-8"><h4>Product Name</h4></div>
+                                        <div class="col-4"><h4>No Of Sale</h4></div>
+
+                                    </div>
+                                        <!--<img src="images/sunglasses.jpg" alt="">-->
+                                  
+                                    
+
+                                  
+
+                                </li>
+                                 @foreach(var it in Model.gettopselingitems)
+                                 {
+                                    <li>
+
+                                    <div class="row">
+                                    <div class="col-8"> <p>@it.ProductName</p> </div>
+                                    <div class="col-4"><p>@it.NoOfSales</p></div>                                      
+                                         <!-- <img src="images/nike.jpg" alt="">-->
+                                     </div>
+                                   </li>
+                                 }
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+             
+                
+    </div>
+}

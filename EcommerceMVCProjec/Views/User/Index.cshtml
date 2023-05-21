@@ -1,0 +1,97 @@
+﻿@model IEnumerable<EcommerceProject.Models.UserRegistrationModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<br />
+<br />
+
+<p>
+ <div class="row">
+     <div class="col"></div>
+     <div class="col">
+          <a asp-action="" class="btn" style="">
+            <i class="fas fa-user-friends text-center" style="font-size: 48px;"><h6><span class="text-center" style="font-size:18px;">All Employee</span></h6></i>
+          </a>
+        </div>
+     <div class="col">
+          <a asp-action="" class="btn" style="">
+            <img src="https://static.thenounproject.com/png/4036398-200.png" alt="book images" class="ms-2" width="50" height="50"><br />
+           <span class="" style="font-size:18px;">Network</span>
+          </a>
+       </div>
+     <div class="col">
+            <a asp-action="AddEmployee" class="btn" style="">
+                <i class="fas fa-plus-square" style="color: rgb(72, 168, 237); font-size: 40px; box-sizing: content-box; line-height: 72px; text-align: center; width: 72px; height: 72px; display: inline-block; overflow: hidden; border-radius: 50%; background-color: rgb(224, 231, 237);">
+                <span style="font-size:18px;"><h1> Add Employee</h1></span></i>
+            </a>
+     </div>
+ </div>
+    
+   
+    
+</p>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MobileNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Include the FontAwesome CSS file -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">

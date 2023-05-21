@@ -1,0 +1,252 @@
+﻿@model EcommerceProject.Models.ProductAdd
+
+@{
+    ViewData["Title"] = "AddNewProduct";
+}
+<div class="container-fuild">
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 border border-5 mt-5">
+            <form asp-action="AddNewProduct">
+                <div class="form-control">
+                    <label for="productname" class="mt-3">Product Name</label>
+                    <input type="text" class="form-control mt-3 mb-3" id="productname" name="productname" placeholder="enter product name">
+                </div>
+
+                <div class="form-control">
+                    <label asp-for="SellingPrice" class="control-label"></label>
+                    <input asp-for="SellingPrice" class="form-control" placeholder="enter your price" />
+                </div>
+
+                <div class="form-control">
+                    <label asp-for="BuyPrice" class="control-label"></label>
+                    <input asp-for="BuyPrice" class="form-control" placeholder="enter your price" />
+                </div>
+                <div class="form-control">
+
+                    <input type="hidden" id="Description" name="Description">
+
+                </div>
+                <div class="form-control" id="mmd">
+
+                    <button type="button" class="btn btn-warning m-3" data-bs-toggle="modal" data-bs-target="#myModalone">
+                        Add Description
+                    </button>
+
+                </div>
+
+                
+
+                <div class="form-control">
+                    <label for="Specification" class="mb-3">Specification</label>
+                    <input type="text" class="form-control mb-3" id="Specification" name="Specification" placeholder="enter product Description">
+                </div>
+                <div class="form-control">
+                    <label for="TypeId" class="mb-3">Type Id</label>
+                    <input type="number" class="form-control mb-3" id="TypeId" name="TypeId" placeholder="enter product type id">
+                </div>
+                <div class="form-control">
+
+                    <input type="hidden" id="ImageUrl" name="ImageUrl">
+
+                </div>
+                <div class="form-control" id="mm">
+
+                    <button type="button" class="btn btn-warning m-3" data-bs-toggle="modal" data-bs-target="#myModal">
+                        Add Images
+                    </button>
+
+                </div>
+                <div class="form-control">
+
+                    <button type="submit" value="AddNewProduct" class="btn btn-primary form-control mt-3 mb-3">Submit</button>
+
+                </div>
+            </form>
+
+        </div>
+        <input type="hidden" id="controlid" name="controlid" value="1">
+        <div class="col-3"></div>
+
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModalone">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Enter Descriptions</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-control">
+                            <input type="text" id="desId" name="desId" calss="form-control" placeholder="Add Discriptions">
+                        </div>
+
+                        <div class="form-control">
+                            <button type="reset" class="btn btn-primary" onclick="adddiscription()">Add</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Enter Image Url</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-control">
+                            <input type="text" id="urlsid" name="urlsid" calss="form-control" placeholder="add minimum 3 images">
+                        </div>
+
+                        <div class="form-control">
+                            <button type="reset" class="btn btn-primary" onclick="addfunc()">Add</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@* <form asp-action="AddNewProduct">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="">
+                        <label asp-for="ProductName" class="control-label"></label>
+                        <input asp-for="ProductName" class="form-control" />
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+                    <div class="">
+                        <label asp-for="ImageUrl" class="control-label"></label>
+                        <input asp-for="ImageUrl" class="form-control" />
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+                    <div class="">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="">
+                        <label asp-for="Specification" class="control-label"></label>
+                        <input asp-for="Specification" class="form-control" />
+                        <span asp-validation-for="Specification" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TypeId" class="control-label"></label>
+                        <input asp-for="TypeId" class="form-control" />
+                        <span asp-validation-for="TypeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-4">
+                                <input type="submit" value="AddBook" class="btn btn-primary my-2" />
+                            </div>
+                            <div class="col-4"></div>
+
+                            <div class="col-4">
+                                <a asp-action="GetAllBook" class="justify-content-end btn btn-secondary my-2" style="float: right;"> BookList </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>*@
+<input type="hidden" id="controlid" name="controlid" value="1">
+<input type="hidden" id="controlidd" name="controlidd" value="1">
+
+
+
+<script>
+    console.log('chech');
+
+    console.log('//////////////////////////////////////');
+
+    var elem = document.getElementById('productname').value;
+    console.log(elem)
+
+    function printfunc() {
+        var elemname = document.getElementById('productname').value;
+        console.log(elemname + '  product name');
+
+        var elemprice = document.getElementById('productprice').value;
+        console.log(elemprice + '  price');
+        var elemurl = document.getElementById('imgsid').value;
+        console.log(elemurl);
+        event.preventDefault();
+
+    }
+
+    function adddiscription() {
+        var elem = document.getElementById('controlidd').value;
+        console.log(elem);
+        if (elem == '1') {
+            console.log('yes');
+            document.getElementById('Description').value = document.getElementById('desId').value;
+            console.log('no');
+            (document.getElementById('controlidd')).value += '2';
+        }
+        else {
+            document.getElementById('Description').value += '.' + document.getElementById('desId').value;
+        }
+
+    }
+
+    function addfunc() {
+        var elem = document.getElementById('controlid').value;
+        if (elem == '1') {
+            document.getElementById('ImageUrl').value = document.getElementById('urlsid').value;
+            (document.getElementById('controlid')).value += '2';
+        }
+        else {
+            document.getElementById('ImageUrl').value += ',' + document.getElementById('urlsid').value;
+        }
+
+    }
+</script>
+
+<div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

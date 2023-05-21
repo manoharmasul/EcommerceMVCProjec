@@ -1,0 +1,115 @@
+﻿@model EcommerceProject.Models.UserRegistrationModel
+
+@{
+    ViewData["Title"] = "UserRegistration";
+}
+
+<section class="" style="background-color: #9A616D;">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center ">
+            <div class="col col-xl-10">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="card-body p-4 p-lg-5 text-black">
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Create Your Account</h5>
+                                <form asp-action="UserRegistration">
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+
+                                            <div class="form-outline">
+                                                <label class="form-label" for="firstName">First Name</label>
+                                                <input type="text" id="firstName" class="form-control form-control-lg is-invalid" name="FirstName" required placeholder="FirstName" />
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+
+                                            <div class="form-outline">
+                                                <label class="form-label" for="lastName">Last Name</label>
+                                                <input type="text" id="lastName" class="form-control form-control-lg is-invalid" name="LastName" required placeholder="LastName" />
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                            <div class="form-outline datepicker w-100">
+                                                <label for="birthdayDate" class="form-label">Birthday</label>
+                                                <input type="date" class="form-control form-control-lg is-invalid" id="birthdayDate" name="DateOfBirth" required placeholder="Date Of Birth" />
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+
+                                            <h6 class="mb-2 pb-1">Gender: </h6>
+                                           
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="Gender" id="maleGender"
+                                                       value="Male" />
+                                                <label class="form-check-label" for="maleGender">Male</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="Gender" id="femaleGender"
+                                                       value="Female" />
+                                                <label class="form-check-label" for="femaleGender">Female</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="Gender" id="otherGender"
+                                                       value="Other" />
+                                                <label class="form-check-label" for="otherGender">Other</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4 pb-2">
+
+                                            <div class="form-outline">
+                                                <label class="form-label" for="emailAddress">Email</label>
+                                                <input type="email" id="emailAddress" class="form-control form-control-lg is-invalid" name="EmailId" required placeholder="Email Id" />
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4 pb-2">
+
+                                            <div class="form-outline">
+                                                <label class="form-label" for="phoneNumber">Phone Number</label>
+                                                <input type="tel" id="phoneNumber" class="form-control form-control-lg is-invalid" name="MobileNo" placeholder="Mobile No" />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-outline">
+                                        <button class="btn btn-dark btn-lg btn-block form-control mt-3 mb-5" type="submit" value="UserRegistration">Register</button>
+
+                                    </div>
+
+                                    <a class="small text-muted" href="#!">Forgot password?</a>
+                                    <p class="mb-5 pb-lg-2" style="color: #393f81;">
+                                        Do You have an account? <a href="LogIn"
+                                                                   style="color: #393f81;">Log In Here</a>
+                                    </p>
+                                    <a href="#!" class="small text-muted">Terms of use.</a>
+                                    <a href="#!" class="small text-muted">Privacy policy</a>
+                                </form>
+                            </div>
+                            <div class="col-2">   </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

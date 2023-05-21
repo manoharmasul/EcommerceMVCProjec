@@ -1,0 +1,111 @@
+﻿@model IEnumerable<EcommerceProject.Models.GetAttendanceModel>
+
+@{
+    ViewData["Title"] = "GetAttendanceRecord";
+}
+
+<h1>GetAttendanceRecord</h1>
+<br />
+<br />
+<br />
+<br />
+
+@{
+    var modellist = Model.ToList();
+
+    <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <form asp-controller="Attendance" asp-action="GetAttendanceRecord" class="mb-5 ms-5">
+                    <div class="row">
+                 
+                        <div class="col">
+                            <Label for="UserName" class="form-label">Employee</Label>
+                            <input list="brow" name="UserName" id="UserName" placeholder="Employee Name" class="form-control">
+                              <datalist id="brow">
+                                    @if(modellist.Count()>0)
+                                    {
+                                        @foreach (var item in modellist[0].emplist)
+                                        {
+                                            <option value="@item.UserName"></option>
+                                        }
+                                    }
+                               
+                              </datalist>  
+                        </div>
+                        <div class="col">
+                            <div class="">
+                                <label for="FromDate" class="form-label">FromDate</label>
+                                <input type="date" id="FromDate" name="FromDate" placeholder="From Date" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="">
+                                <label for="ToDate" class="form-label">FromDate</label>
+                                <input type="date" id="ToDate" name="ToDate" placeholder="To Date" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="">
+                                <label for="demo" class="form-label"></label>
+                                <button type="submit" name="demo" id="demo" class="btn btn-primary mt-4" style="">Search</button>
+                            </div>
+                        </div>
+                      
+                    </div>
+                   
+                   
+
+                </form>
+            </div>
+        <div class="col-1"></div>
+    </div>
+    }
+    <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+    
+   
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>
+                        @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AttendanceDate)
+                </th>
+                <th>
+                        @Html.DisplayNameFor(model => model.Time)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+          
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                            @Html.DisplayFor(modelItem => item.AttendanceDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+          
+                      
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+}
+        </tbody>
+    </table>
+    </div>
+    <div class="col-1"></div>
+</div>

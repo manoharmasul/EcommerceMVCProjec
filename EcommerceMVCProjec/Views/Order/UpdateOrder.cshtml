@@ -1,0 +1,81 @@
+﻿@model EcommerceProject.Models.UpdateOrderBillingAddress
+
+@{
+    ViewData["Title"] = "UpdateOrder";
+}
+
+
+
+<hr />
+<div class="container-fuild">
+    <br />
+    <br />
+    <br />
+    <div class="row">
+
+        <div class="col-3"></div>
+
+        <div class="col-6 border border-5 mt-5">
+            <br />
+            <br />         
+        <form asp-action="UpdateOrder">
+
+                <div class="form-group">
+                    <label asp-for="ProductId" class="control-label"></label>
+                    <input asp-for="ProductId" class="form-control" />
+                    <span asp-validation-for="ProductId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ProductName" class="control-label"></label>
+                    <input asp-for="ProductName" class="form-control" />
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="BillingAddress" class="control-label"></label>
+                    <input asp-for="BillingAddress" class="form-control" />
+                    <span asp-validation-for="BillingAddress" class="text-danger"></span>
+                </div>
+
+            <div class="form-group">
+                    <label asp-for="OrderCounts" class="control-label"></label>
+                    <input asp-for="OrderCounts" class="form-control" />
+                    <span asp-validation-for="OrderCounts" class="text-danger"></span>
+            </div>
+                <div class="form-group mt-2 mb-2">
+                    <label for="OrderStatusId">Change Status:</label>
+                    <select class="form-select form-control" name="OrderStatusId">
+                        <option value="@Model.OrderStatusId">@Model.OrderStatus</option>
+                        <option value="2">Ready For Dispatched</option>
+                        <option value="3">Dispatched</option>
+                        <option value="4">Delivered</option>
+                    </select>
+                </div>
+               
+            <div class="form-group">
+                    <label asp-for="OrderQuantity" class="control-label"></label>
+                <input asp-for="OrderQuantity" class="form-control" />
+                    <span asp-validation-for="OrderQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                    <label asp-for="Available_Products" class="control-label"></label>
+                    <input asp-for="Available_Products" class="form-control" />
+                    <span asp-validation-for="Available_Products" class="text-danger"></span>
+            </div>
+           
+           
+            <div class="form-group">
+                <a asp-action="GetAllOrders" asp-controller="Order" class="btn btn-danger mt-3">Cancel</a>
+                    <input type="submit" value="Save" class="btn btn-primary mt-3" style="float: right;" />
+            </div>
+        </form>
+            <br />
+            <br />
+    </div>
+</div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

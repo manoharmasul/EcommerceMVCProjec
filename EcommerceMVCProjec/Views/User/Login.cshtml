@@ -1,0 +1,63 @@
+﻿@model EcommerceProject.Models.UserLogInModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="" style="background-color: #9A616D;">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center ">
+            <div class="col col-xl-10">
+                <div class="card mt-lg-5 mb-lg-5" style="border-radius: 1rem; ">
+                    <div class="card-body p-4 p-lg-5 text-black">
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-6">
+
+                                <form asp-action="Login">
+
+                                    @*<div class="d-flex align-items-center mb-3 pb-1">
+                                    <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                    <span class="h1 fw-bold mb-0">Logo</span>
+                                    </div>*@
+
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label" for="userName">username or email</label>
+                                        <input type="text" id="userName" class="form-control form-control-lg" name="UserName" placeholder="Enter your email or username" required />
+
+                                    </div>
+
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label" for="password">Password</label>
+                                        <input type="password" placeholder="Enter your password" id="password" class="form-control form-control-lg" name="Password" required />
+
+                                    </div>
+
+                                    <div class="pt-1 mb-2">
+                                        <button class="btn btn-dark btn-lg btn-block form-control mt-4 mb-4" type="submit" value="LogIn">Login</button>
+
+                                    </div>
+
+                                    <a class="small text-muted" href="#!">Forgot password?</a>
+                                    <p class="mb-5 pb-lg-2 mt-2" style="color: #393f81;">
+                                        Don't have an account? <a href="UserRegistration"
+                                                                  style="color: #393f81;">Register here</a>
+                                    </p>
+                                    <a href="#!" class="small text-muted">Terms of use.</a>
+                                    <a href="#!" class="small text-muted">Privacy policy</a>
+                                </form>
+                            </div>
+                            <div class="col-3">   </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

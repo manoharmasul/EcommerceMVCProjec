@@ -1,0 +1,220 @@
+﻿@model EcommerceProject.Models.ProductAdd
+
+@{
+    ViewData["Title"] = "Details";
+}
+<h5 class="text-center">Shop Now</h5>
+<br />
+<br />
+<br />
+<br />
+
+<div class="container-fluid">
+
+    @{
+       
+
+
+        @if (Model.ImageUrl != null)
+        {
+            string mystr1 = "";
+            string mystr2 = "";
+            string strings=Model.Specification;
+            string [] str = strings.Split(" ");
+
+           
+
+            for(int i=0;i<20;i++)
+            {
+                mystr1 += " " + str[i];
+            }
+            for (int j = 21; j < str.Length; j++)
+            {
+                mystr2 += " " + str[j];
+            }
+            string descrip = Model.Description;
+            string[] des = descrip.Split(".");
+            string d1 = des[0];
+            string d2 = des[1];
+            string d3 = des[2];
+            string m1, m2, m3;
+
+            var images = Model.ImageUrl.Split(",");
+
+            m1 = images[0];
+
+            m2 = images[1];
+
+            m3 = images[2];
+
+                <div class="card text-dark">
+                    <div class="row">
+                    <div class="col-1"></div>
+                        <div class="col-3">
+                            <span class=" ">
+
+                                <div id="xx" class="carousel slide" data-bs-ride="carousel">
+
+                                    <!-- Indicators/dots -->
+                                    <div class="carousel-indicators">
+
+                                        <button type="button" data-bs-target="#xx" data-bs-slide-to="0" class="active"></button>
+
+                                        <button type="button" data-bs-target="#xx" data-bs-slide-to="1"></button>
+
+                                        <button type="butoon" data-bs-target="#xx" data-bs-slide-to="2"></button>
+
+                                    </div>
+                                    <!-- The slideshow/carousel -->
+                                    <div class="carousel-inner">
+
+                                        <div class="carousel-item active">
+
+                                        <img src="@Html.DisplayFor(modelItem => m1)" alt="Laptop Image"  width="150" height="300" class="d-block w-100 mt-5 me-2 ms-2 rounded">
+
+                                        </div>
+
+                                        <div class="carousel-item">
+
+                                        <img src="@Html.DisplayFor(modelItem => m2)" alt="Laptop Image" width="150" height="300" class="d-block w-100 mt-5 me-2 ms-2 rounded">
+
+                                        </div>
+
+                                        <div class="carousel-item">
+
+                                        <img src="@Html.DisplayFor(modelItem => m3)" alt="Laptop Image" width="150" height="300" class="d-block w-100 mt-5 me-2 ms-2 rounded">
+
+                                        </div>
+
+                                    </div>
+                                    <!-- Left and right controls/icons -->
+                                    <button type="button" class="carousel-control-prev" data-bs-target="#xx" data-bs-slide="prev"> <span class="carousel-control-prev-icon"></span></button>
+
+                                    <button type="button" class="carousel-control-next" data-bs-target="#xx" data-bs-slide="next">
+
+                                        <span class="carousel-control-next-icon"></span>
+
+                                    </button>
+                                </div>
+
+                            </span>
+
+                        </div>
+                        <div class="col-7 ms-1">
+
+                            <br>
+
+                            <h5>@Html.DisplayFor(model => model.ProductName)</h5>
+
+                            <br>
+
+                            <ul>
+                            @for (int i = 0; i < des.Length; i++)
+                            {
+                                <li>@des[i]</li>
+                            }
+                            </ul>
+
+                            <br>
+                            <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-6">
+                                <h5>About Product : </h5>
+                                <p>@mystr1
+                                    <span id="dots">......</span><span id="more" style="display:none">
+                                    @mystr2 </span>
+                                    <br>
+                                    <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-3"></div>
+                                    <div class="col-5">
+                                            <a onclick="myFunction()" class=" mt-3 ms-2" id="myBtn">Read more</a>
+                                    </div>
+                                    </div>
+                                    
+                                </p>
+                            </div>
+                            <div class="col-5"></div>
+                           
+                            </div>
+
+
+
+                           
+
+                            <br>
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-6">
+                                <span class="badge bg-warning text-dark mt-2 mb-5">  <h5>Rs : @Model.SellingPrice -/ </h5></span>
+                            </div>
+                            <div class="col-5"></div>
+
+                        </div>
+                      
+
+                            <div class="row">
+
+                                <div class="col-4">
+
+                                    <a asp-action="Index" class="btn btn-primary m-2 mb-3">Products</a>
+
+                                </div>
+
+                                <div class="col-4">
+
+                                @Html.ActionLink("Orde Item", // <-- Link text
+
+                        "OrderItems",
+
+                        "Order",
+
+                        // <-- Action Method Name
+
+                        new { id=Model.Id,price=Model.SellingPrice}, // <-- Route arguments
+
+                        new {@class="btn btn-success m-2 mb-3", data_val="abc"}  // <-- htmlArguments
+
+                        )
+                                </div>
+
+                                <div class="col-4">
+
+
+                                   
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+
+                </div>
+
+        }
+
+
+       
+
+        <script>
+            function myFunction() {
+                var dots = document.getElementById("dots");
+                var moreText = document.getElementById("more");
+                var btnText = document.getElementById("myBtn");
+
+                if (dots.style.display === "none") {
+                    dots.style.display = "inline";
+                    btnText.innerHTML = "Read more";
+                    moreText.style.display = "none";
+                } else {
+                    dots.style.display = "none";
+                    btnText.innerHTML = "Read less";
+                    moreText.style.display = "inline";
+                }
+            }
+        </script>
+    }
+</div>
+
