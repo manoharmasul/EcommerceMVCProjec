@@ -16,8 +16,14 @@ namespace EcommerceProject.Controllers
 
         // GET: OrderController
         public async Task<ActionResult> GetAllOrders()
-        {     
-            var resutl = await orderasyncrepo.GetAllOrders();   
+        {
+            var uId = HttpContext.Session.GetString("userId");
+            var SalesManagerId = Int32.Parse(uId);
+            if(SalesManagerId==1)
+            {
+                SalesManagerId = 0;
+            }
+            var resutl = await orderasyncrepo.GetAllOrders(SalesManagerId);   
             return View(resutl);
         }
         public async Task<ActionResult> GetMyOrders(long userId)

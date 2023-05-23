@@ -38,6 +38,12 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.Available_Products)
                             </th>
+                            <th>
+                               SalesManager
+                            </th>
+                            <th>
+                                DistrictName
+                            </th>
                     
 
                         <th>
@@ -73,6 +79,12 @@
                             <td class="">
                                     @Html.DisplayFor(modelItem => item.Available_Products)
                             </td>
+                            <td class="">
+                                    @Html.DisplayFor(modelItem => item.SalesManagerName)
+                            </td>
+                            <td class="">
+                                    @Html.DisplayFor(modelItem => item.DistrictName)
+                            </td
 
                             <td>
                                     @Html.ActionLink("", "UpdateOrder", new {  id=item.ProductId},new{@class="btn fa fa-edit",style="font-size:40px;color:DodgerBlue"})

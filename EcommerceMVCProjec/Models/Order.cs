@@ -53,6 +53,8 @@ namespace EcommerceProject.Models
         public string OrderStatus { get; set; }
         public long OrderQuantity { get; set; }
         public long Available_Products { get; set; }
+        public string DistrictName { get; set; }
+        public string SalesManagerName { get; set; }
 
 
     }

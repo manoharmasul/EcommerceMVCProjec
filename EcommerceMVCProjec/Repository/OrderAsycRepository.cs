@@ -15,24 +15,29 @@ namespace EcommerceProject.Repository
             this.context = context;
         }
 
-        public async Task<List<GetAllOrdersForAdmin>> GetAllOrders()
+        public async Task<List<GetAllOrdersForAdmin>> GetAllOrders(long SalesManagerId)
         {
 
             //SrNo,ProductId,ProductName,OrderCounts,OrderStatus,OrderQuantity,Available_Products
-            var query = @"select   ROW_NUMBER() OVER (
-                        Order By Os.OrderStatus
-                        ) SrNo,
+            var query = @"select   ROW_NUMBER() OVER (Order By Os.OrderStatus) SrNo,
                         p.Id as ProductId,p.ProductName,Count(p.Id) as OrderCounts,
                         Os.OrderStatus,Os.Id,(select sum(Quantity) from tblOrder where ProductId=p.Id) 
-                        as OrderQuantity,p.ProductQuantity as Available_Products from tblOrder o
+                        as OrderQuantity,p.ProductQuantity as Available_Products,DistrictName,
+                        ISNULL((select Username from tblUSer where (Id=l.SalesManagerId)),'') as SalesManagerName from 
+                        tblOrder o
                         inner join tblProducts p on o.ProductId=p.Id
                         inner join tblorderStatus os on o.OrderStatusId=os.Id
-                        where   o.IsDeleted=0 group by p.Id,p.ProductName,
-                        Os.OrderStatus,p.ProductQuantity,Os.Id  Order by Os.Id";
+                        inner join tblDistrict d on o.DistrictId=d.Id
+                        left join tblAssignLocation l on o.DistrictId=l.DistrictId
+                        where   o.IsDeleted=0 and o.OrderStatusId=1 
+                        and (@SalesManagerId=0 or l.SalesManagerId=@SalesManagerId) 
+                        group by p.Id,p.ProductName,DistrictName,
+                        Os.OrderStatus,p.ProductQuantity,Os.Id ,SalesManagerId Order by Os.Id
+                        ";
 
             using(var connection=context.CreateConnection())
             {
-                var orders = await connection.QueryAsync<GetAllOrdersForAdmin>(query);
+                var orders = await connection.QueryAsync<GetAllOrdersForAdmin>(query, new {SalesManagerId=SalesManagerId});
 
                 return orders.ToList();
             }
