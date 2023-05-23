@@ -10,161 +10,230 @@
 
 <p>
     <div class="row">
-        <div class="col"></div>
-        <div class="col">
-            <button class="btn btn-primary" id="mmm">
-               View All Employees
+        <div class="col-8"></div>
+  
+        <div class="col-2">
+            <button class="btn btn-primary ms-1" id="mmm">
+                View  Employees
             </button>
         </div>
-        <div class="col">
-            <button class="btn btn-primary" id="">
-                View Network
-            </button>
-        </div>
-        <div class="col">
+        <div class="col-2">
             <a asp-action="AddEmployee" class="btn btn-primary" style="">
-                Add New Employee
+                Add Employee <i class='fas fa-user-plus' style='font-size:15px'></i>
             </a>
         </div>
     </div>
 </p>
 <br />
+
 @{
     var count = 0;
-   
-        
-        
-       <div id="changeid">
-            <table class="table" id="one">
-                <thead>
-                    <tr>
-                        <th>
-                            Id
-                        </th>
-                        <th>
-                            UserName
-                        </th>
-                        <th>
-                            EmailId
-                        </th>
-                        <th>
-                            MobileNo
-                        </th>
-                        <th>
-                            Gender
-                        </th>
-                        <th>
-                            Role
-                        </th>
-                        <th>
-                            Actions
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.managerlist)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Id)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UserName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EmailId)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MobileNo)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Gender)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Role)
-                            </td>
-                            <td>
+}
 
+<div id="changeid">
+    <table class="table text-center" id="one">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    UserName
+                </th>
+                <th>
+                    EmailId
+                </th>
+                <th>
+                    MobileNo
+                </th>
+                <th>
+                    Gender
+                </th>
+                <th>
+                    Role
+                </th>
+                <th>
+                    DistrictName
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.managerlist)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MobileNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DistrictName)
+                    </td>
+                    <td>
+                        <button class="btn btn-primary m-2 mb-3 assign-area" data-bs-toggle="modal" data-bs-target="#myModalone" data-id="@item.Id">Assign Area <i class="fa fa-edit" style="font-size:15px"></i></button>
 
-                            @Html.ActionLink("View Networks", "AssignLocationsToManager", new {@class="btn btn-primary m-2 mb-3",id="network", data_val="abc"} , new {  id=item.Id})
-                            
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-       </div>
-        }
-        <div id="two" hidden>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            Id
-                        </th>
-                        <th>
-                            UserName
-                        </th>
-                        <th>
-                            EmailId
-                        </th>
-                        <th>
-                            MobileNo
-                        </th>
-                        <th>
-                            Gender
-                        </th>
-                        <th>
-                            Role
-                        </th>
-                        <th>
-                            Actions
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.allemployeelist)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Id)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UserName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EmailId)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MobileNo)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Gender)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Role)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                    </td>
+                    <td>
+                        @Html.ActionLink("View Network", "GetNetworkBySalesManager", new { id=item.Id }, new { @class="btn btn-success m-2 mb-3", data_val="abc" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
-    
+
+<div id="two" hidden>
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    UserName
+                </th>
+                <th>
+                    EmailId
+                </th>
+                <th>
+                    MobileNo
+                </th>
+                <th>
+                    Gender
+                </th>
+                <th>
+                    Role
+                </th>
+                <th>
+                    Actions
+                </th>
+                <th>
+                    District
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.allemployeelist)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MobileNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DistrictName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal" id="myModalone">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Assign Area</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!-- Add your form elements here -->
+                <form asp-action="AssignLocationToManager">
+                    <input type="number" class="form-control mb-3" id="SalesManagerId" name="SalesManagerId" hidden>
+                    <input type="number" class="form-control mb-3" id="DistrictId" name="DistrictId" placeholder="enter product Description" hidden>
+
+                    <Label for="DistrictName" class="form-label">Select District</Label>
+                    <input list="brow" name="DistrictName" id="DistrictName" class="form-control">
+                    <datalist id="brow">
+                        @foreach (var item in Model.alldistrictModels)
+                        {
+                            <option value="@item.DistrictName"></option>
+                        }
+                    </datalist>
+                    <hr />
+                    <button class="btn btn-danger mt-3" data-bs-dismiss="modal" style="float:left"> Cancel </button>
+                    <button type="submit" class="btn btn-primary mt-3" data-bs-dismiss="modal" style="float:right"> Assign </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 <script>
-    console.log(document.getElementById('mmm'))
+    console.log(document.getElementById('mmm'));
 
     document.getElementById('mmm').addEventListener('click', function () {
-        console.log('yes')
-        var changeelement = document.getElementById('changeid');
+        console.log('yes');
+        var changeElement = document.getElementById('changeid');
         var twoTable = document.getElementById('two').innerHTML;
-        changeelement.innerHTML = twoTable;
-    })
+        changeElement.innerHTML = twoTable;
+    });
+
+    // Add event listeners to all assign-area buttons
+    var assignButtons = document.getElementsByClassName('assign-area');
+    for (var i = 0; i < assignButtons.length; i++) {
+        assignButtons[i].addEventListener('click', function () {
+            var salesManagerId = this.getAttribute('data-id');
+            document.getElementById('SalesManagerId').value = salesManagerId;
+        });
+    }
+
+    document.getElementById('DistrictName').addEventListener('change', function () {
+        var distList = @Html.Raw(Json.Serialize(Model.alldistrictModels));
+        var checkId = 0;
+
+        distList.forEach(function (item) {
+            var did = document.getElementById('DistrictName').value;
+            if (did == item.districtName) {
+                checkId = item.id;
+            }
+        });
+
+        document.getElementById('DistrictId').value = checkId;
+        console.log(document.getElementById('DistrictId').value);
+        console.log(document.getElementById('SalesManagerId').value);
+    });
 </script>
+
+
 <!-- Include the FontAwesome CSS file -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">

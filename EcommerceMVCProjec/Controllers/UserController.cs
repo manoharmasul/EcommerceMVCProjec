@@ -16,24 +16,58 @@ namespace EcommerceProject.Controllers
             this.userasynrepo = userasynrepo;
             this.attendanceRepo = attendanceRepo;
         }
-        public async Task<ActionResult> AssignLocationsToManager()
+
+        public async Task<ActionResult> GetNetworkBySalesManager(long? ret,long? id)
         {
-            AssignLocationModel assignLocation=new AssignLocationModel();
-            assignLocation.resultreturn = 10;
-            var assinglocation = await userasynrepo.AssignLocationsToManager(assignLocation);
-            return View(assinglocation);
+            var myresul = 0;
+            if (id == 0 || id == null)
+            {
+                myresul = (int)ret;
+            }
+            else
+            {
+                myresul = (int)id;
+            }
+
+            var result=await userasynrepo.GetNetworkBySalesManager(myresul);
+
+            return View(result);
+        }
+        // POST: UserController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AssigLocationToDeliveryBoy(AssiginDeliveryBoyModel assignLocation)
+        {
+            try
+            {
+                var Id = HttpContext.Session.GetString("userId");
+                var userId = Int32.Parse(Id);
+                assignLocation.createdBy = userId;
+                var assign = await userasynrepo.AssigLocationToDeliveryBoy(assignLocation);
+                var ret = assignLocation.SalesManagerId;
+
+                return RedirectToAction(nameof(GetNetworkBySalesManager), new { ret });
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AssignLocationsToManager(AssignLocationModel assignLocation)
+        public async Task<ActionResult> AssignLocationToManager(AssignLocationModel assignLocation)
         {
             try
             {
+                var Id = HttpContext.Session.GetString("userId");
+                var userId = Int32.Parse(Id);
+                assignLocation.createdBy = userId;
                 var assign = await userasynrepo.AssignLocationsToManager(assignLocation);
-                var result=assign.resultreturn = 0;
-                return RedirectToAction(nameof(SetPassword), new { result });
+
+             
+                return RedirectToAction(nameof(GetAllUserModelManagerOther));
             }
             catch
             {
@@ -150,7 +184,7 @@ namespace EcommerceProject.Controllers
                     return RedirectToAction(nameof(Login));
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(GetAllUserModelManagerOther));
             }
             catch
             {

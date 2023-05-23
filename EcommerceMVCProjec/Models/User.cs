@@ -18,6 +18,7 @@ namespace EcommerceProject.Models
     {
         public List<UserRegistrationModel> managerlist { get; set; }
         public List<UserRegistrationModel> allemployeelist { get; set; }
+        public List<DistrictModel> alldistrictModels { get; set; }
     }
     public class UserRegistrationModel
     {
@@ -32,6 +33,7 @@ namespace EcommerceProject.Models
         public DateTime DateOfBirth { get; set; }    
         public long RoleId { get; set; }
         public string Role { get; set; }
+        public string DistrictName { get; set; }
         public double WalletBalance { get; set; }
         public List<UserTypes> userTypes { get; set; }
     }
@@ -73,9 +75,31 @@ namespace EcommerceProject.Models
     {
        // insert into tblAssignLocation(SalesMagerId, DistrictId, CreatedBy, CreatedDate, IsDeleted) values(@SalesMagerId, @DistrictId, @CreatedBy, @CreatedDate,0)
 
-        public long SalesMagerId { get; set; }
-        public long DistrictId { get; set; }
-        public long resultreturn { get; set; }
-        public List<DistrictModel> distlist { get; set; }
+        public long SalesManagerId { get; set; }
+        public long DistrictId { get; set; } 
+   
+    }
+    public class GetNetworkSalesManagerModel
+    {
+        //Id,UserName,EmailId,MobileNo,,RoleId,Role,Sub_DivisionsId,Sub_Division
+        public long Id { get; set; }
+        public long SalesManagerId { get; set; }
+        public string UserName { get; set; }
+        public string EmailId { get; set; }
+        public string MobileNo { get; set; }
+        public string Role { get; set; }
+        public long Sub_DivisionsId { get; set; }
+        public string Sub_DivisionsName { get; set; }
+        public List<SubDivisionModel> subdivisionlist { get; set; }
+        public List<DistrictModel> districtmodel { get; set; }
+        public List<UserRegistrationModel> deliveryboylist  { get; set; }
+    }
+    public class AssiginDeliveryBoyModel:BaseModel
+    {
+        ////SalesManagerId,DeliveryBoyId,tblSub_DivisionId
+        public long SalesManagerId { get; set; }
+        public long DeliveryBoyId { get; set; }
+        public long Sub_DivisionId { get; set; }
+
     }
 }

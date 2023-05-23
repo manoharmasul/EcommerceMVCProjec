@@ -11,10 +11,12 @@ namespace EcommerceProject.Repository.Interface
         Task<GetAllUserModelManagerOther> GetAllUserModelManagerOther();
         Task<List<UserRegistrationModel>> GetAllUsers();
         Task<UserRegistrationModel> GetAllUsersAdd();
+        Task<List<GetNetworkSalesManagerModel>> GetNetworkBySalesManager(long? salesmagerId);
         Task<UserRegistrationModel> GetUserById(long id);
         Task<GetUserLogInModel> UserLogIn(UserLogInModel usermodel);
         Task<long> AddWalletBalance(UserRegistrationModel addwalletbalace);
-        Task<AssignLocationModel> AssignLocationsToManager(AssignLocationModel assignLocation);
+        Task<long> AssignLocationsToManager(AssignLocationModel assignLocation);
+        Task<long> AssigLocationToDeliveryBoy(AssiginDeliveryBoyModel assigndeliveryboymodel);
         
 
     }

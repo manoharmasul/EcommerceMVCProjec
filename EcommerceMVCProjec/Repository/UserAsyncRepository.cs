@@ -20,9 +20,9 @@ namespace EcommerceProject.Repository
 
         public async Task<List<UserRegistrationModel>> GetAllUsers()
         {
-            var query = @"select Id,UserName,EmailId,MobileNo,Gender,Role from tblUser u 
-                         inner join tblUserType ut on u.RoleId=ut.Id
-                         where IsDeleted=0 and RoleId in(1,2,3)";
+            var query = @"select u.Id,UserName,EmailId,MobileNo,Gender,Role from tblUser u 
+                            inner join tblUserType ut on u.RoleId=ut.Id
+                            where IsDeleted=0 and RoleId in(1,2,3)";
             using(var connection=context.CreateConnection())
             {
                 var result=await connection.QueryAsync<UserRegistrationModel>(query);
@@ -200,44 +200,127 @@ namespace EcommerceProject.Repository
         public async Task<GetAllUserModelManagerOther> GetAllUserModelManagerOther()
         {
             GetAllUserModelManagerOther getallmodelmanager=new GetAllUserModelManagerOther();
-            var querymanager = @"select UserName,EmailId,MobileNo,Gender,Role from tblUser u 
-                         inner join tblUserType ut on u.RoleId=ut.Id
-                         where IsDeleted=0 and RoleId in(1,2,3)";
-            var queryallemp = @"select UserName,EmailId,MobileNo,Gender,Role from tblUser u 
+            var querymanager = @"select u.Id,UserName,EmailId,MobileNo,Gender,Role,
+                                isnull((select DistrictName from tblDistrict d inner join tblAssignLocation l on d.Id=l.DistrictId
+                                where SalesManagerId=u.Id),'No Data Found..!') as DistrictName from tblUser u 
+                                inner join tblUserType ut on u.RoleId=ut.Id
+                                where u.IsDeleted=0 and u.RoleId in(3)";
+
+            var queryallemp = @"select u.Id,UserName,EmailId,MobileNo,Gender,Role from tblUser u 
                          inner join tblUserType ut on u.RoleId=ut.Id
                          where IsDeleted=0 and RoleId in(3,4)";
+            var queryalldist = @"select * from tblDistrict";
             using (var connection = context.CreateConnection())
             {
                 var managerlist = await connection.QueryAsync<UserRegistrationModel>(querymanager);
                 var employeelist = await connection.QueryAsync<UserRegistrationModel>(queryallemp);
+                var alldistemp = await connection.QueryAsync<DistrictModel>(queryalldist);
                 getallmodelmanager.managerlist=managerlist.ToList();
                 getallmodelmanager.allemployeelist=employeelist.ToList();
+                getallmodelmanager.alldistrictModels = alldistemp.ToList();
 
                 return getallmodelmanager;
             }
         }
 
-        public async Task<AssignLocationModel> AssignLocationsToManager(AssignLocationModel assignLocation)
+        public async Task<long> AssignLocationsToManager(AssignLocationModel assignLocation)
         {
-            var queryinsert = @"insert into tblAssignLocation(SalesMagerId, DistrictId, CreatedBy, CreatedDate, IsDeleted)
-                               values(@SalesMagerId, @DistrictId, @CreatedBy, @CreatedDate,0)";
+            var queryinsert = @"insert into tblAssignLocation(SalesManagerId, DistrictId, CreatedBy, CreatedDate, IsDeleted)
+                               values(@SalesManagerId, @DistrictId, @CreatedBy, @CreatedDate,0)";
 
             using(var connection = context.CreateConnection())
             {
-                assignLocation.CreatedDate= DateTime.Now;   
-                var districlist=await connection.QueryAsync<DistrictModel>(@"select * from tblDistrict");
+                assignLocation.CreatedDate = DateTime.Now;
 
-                if(assignLocation.resultreturn==0)
+
+                if(assignLocation.DistrictId==0)
                 {
-                    assignLocation.resultreturn=await connection.ExecuteAsync(queryinsert,assignLocation);
+                    return 1;
+                }
+                    var result=await connection.ExecuteAsync(queryinsert,assignLocation);
 
-                    return assignLocation;
+                return result;
 
+                
+            }
+        }
+
+        public async Task<List<GetNetworkSalesManagerModel>> GetNetworkBySalesManager(long? salesmagerId)
+        {
+            var saleid = salesmagerId;
+            GetNetworkSalesManagerModel objnetmodel = new GetNetworkSalesManagerModel();
+            List<GetNetworkSalesManagerModel> getnetworkmodel=new List<GetNetworkSalesManagerModel>();
+            var query = @"select u.Id,u.UserName,EmailId,MobileNo,
+                        u.RoleId,ut.Role,sd.Id as Sub_DivisionsId,
+                        sd.Sub_DivisionsName,(select (SalesManagerId)) as SalesManagerId
+                        from tblUser u 
+                        inner join tblAssignDeliveryBoyTeam adbt on u.Id=adbt.DeliveryBoyId
+                        inner join tblUserType ut on u.RoleId=ut.Id
+                        inner join tblSub_Divisions sd on sd.Id=adbt.Sub_DivisionId
+                        where SalesManagerId=@SalesManagerId";
+
+            var querydist = @"
+                 select d.Id as Id,d.DistrictName as DistrictName from tblDistrict d 
+                 inner join tblAssignLocation l on d.Id=l.DistrictId where l.SalesManagerId=@SalesManagerId";
+
+            var querysubdiv = @"select * from tblSub_Divisions";
+
+            var querydeliveryboy = @"select Id,UserName As UserName from tblUser 
+                                    where Id not in (select DeliveryBoyId 
+                                    from tblAssignDeliveryBoyTeam where IsDeleted=0) 
+                                    and RoleId not in (1,2,3,5)";
+
+            using (var connection=context.CreateConnection())
+            {
+                var distlist = await connection.QueryAsync<DistrictModel>(querydist, new { SalesManagerId= salesmagerId });
+                var subdivlist = await connection.QueryAsync<SubDivisionModel>(querysubdiv);
+                var delivaryboys = await connection.QueryAsync<UserRegistrationModel>(querydeliveryboy);
+               
+                var result = await connection.QueryAsync<GetNetworkSalesManagerModel>(query, new { SalesManagerId = salesmagerId });
+                if (result.Count() > 0)
+                {
+                    foreach (var item in result)
+                    {
+                        item.districtmodel = distlist.ToList();
+                        item.subdivisionlist = subdivlist.ToList();
+                        item.deliveryboylist = delivaryboys.ToList();
+                        break;
+                    }
+                    getnetworkmodel = result.ToList();
+                   return getnetworkmodel;
+                }
+                else
+                {
+                    objnetmodel.districtmodel=distlist.ToList();
+                    objnetmodel.subdivisionlist=subdivlist.ToList();
+                    objnetmodel.deliveryboylist =delivaryboys.ToList();
+                 
+                        objnetmodel.SalesManagerId = (long)saleid;
+                    
+
+                    getnetworkmodel.Add(objnetmodel);
+
+                    return getnetworkmodel;
                 }
 
-                assignLocation.distlist=districlist.ToList();
+             
+            }
+        }
 
-                return assignLocation;
+        public async Task<long> AssigLocationToDeliveryBoy(AssiginDeliveryBoyModel assigndeliveryboymodel)
+        {
+            var queryassign = @"insert into tblAssignDeliveryBoyTeam
+            (SalesManagerId,DeliveryBoyId,Sub_DivisionId,CreatedBy,CreatedDate,IsDeleted)
+            Values(@SalesManagerId,@DeliveryBoyId,@Sub_DivisionId,@CreatedBy,@CreatedDate,@IsDeleted)";
+            using(var connection=context.CreateConnection())
+            {
+                if(assigndeliveryboymodel.Sub_DivisionId==0)
+                {
+                    return 1;
+                }
+                assigndeliveryboymodel.CreatedDate = DateTime.Now;
+                var result = await connection.ExecuteAsync(queryassign, assigndeliveryboymodel);
+                return result;
             }
         }
     }
