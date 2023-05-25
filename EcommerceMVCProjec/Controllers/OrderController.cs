@@ -17,26 +17,27 @@ namespace EcommerceProject.Controllers
         // GET: OrderController
         public async Task<ActionResult> GetAllOrders()
         {
-            var uId = HttpContext.Session.GetString("userId");
-            var SalesManagerId = Int32.Parse(uId);
-            if(SalesManagerId==1)
+            var SalesManagerId = 0;
+            var roleCheck = HttpContext.Session.GetString("userRole");
+            if (roleCheck == "Sales Manager")
             {
-                SalesManagerId = 0;
+                var uId = HttpContext.Session.GetString("userId");
+                SalesManagerId = Int32.Parse(uId);
             }
-            var resutl = await orderasyncrepo.GetAllOrders(SalesManagerId);   
+            var resutl = await orderasyncrepo.GetAllOrders(SalesManagerId);
             return View(resutl);
         }
         public async Task<ActionResult> GetMyOrders(long userId)
         {
 
-           
+
             var uId = HttpContext.Session.GetString("userId");
-             userId = Int32.Parse(uId);          
+            userId = Int32.Parse(uId);
             var resutl = await orderasyncrepo.GetMyOrders(userId);
             var x = HttpContext.Request.QueryString.Value;
-            if(x == "?ord=1")
+            if (x == "?ord=1")
             {
-                ViewBag.num =1; 
+                ViewBag.num = 1;
             }
             else
             {
@@ -53,7 +54,7 @@ namespace EcommerceProject.Controllers
         }
 
         // GET: OrderController/Create
-        public ActionResult OrderItem(long id,double price)
+        public ActionResult OrderItem(long id, double price)
         {
             ViewBag.id = id;
             ViewBag.price = price;
@@ -71,11 +72,11 @@ namespace EcommerceProject.Controllers
                 var UserId = Int32.Parse(uId);
                 order.CustomerId = UserId;
                 order.createdBy = UserId;
-                var prod=await orderasyncrepo.OrdreItem(order);
+                var prod = await orderasyncrepo.OrdreItem(order);
                 if (prod > 0)
                 {
 
-                    return RedirectToAction(nameof(GetMyOrders), new {prod});
+                    return RedirectToAction(nameof(GetMyOrders), new { prod });
                 }
                 return View();
             }
@@ -87,7 +88,7 @@ namespace EcommerceProject.Controllers
 
         public async Task<ActionResult> OrderItems(long id, double price)
         {
-           AddOrderItems addOrder=new AddOrderItems();
+            AddOrderItems addOrder = new AddOrderItems();
             addOrder.resultreturn = 10;
             var addordeit = await orderasyncrepo.OrdreItems(addOrder);
             ViewBag.id = id;
@@ -108,7 +109,7 @@ namespace EcommerceProject.Controllers
                 order.createdBy = UserId;
                 var prods = await orderasyncrepo.OrdreItems(order);
                 var prod = prods.resultreturn;
-               
+
                 if (prod > 0)
                 {
 
@@ -126,7 +127,7 @@ namespace EcommerceProject.Controllers
         // GET: OrderController/Create
         public ActionResult UpdateOrderStatuss()
         {
-          
+
             return View();
         }
 
@@ -140,7 +141,7 @@ namespace EcommerceProject.Controllers
                 var uId = HttpContext.Session.GetString("userId");
                 var UserId = Int32.Parse(uId);
                 updateordstatus.ModifiedBy = UserId;
-              
+
                 var ord = await orderasyncrepo.UpdateOrderStatuss(updateordstatus);
                 if (ord > 0)
                 {
@@ -156,10 +157,18 @@ namespace EcommerceProject.Controllers
         }
 
         // GET: OrderController/Edit/5
-        public async Task<ActionResult> UpdateOrder(long id)
+        public async Task<ActionResult> UpdateOrder(long? Sub_DivisionId, long id)
         {
+            var SalesManagerId = 0;
+            var roleCheck = HttpContext.Session.GetString("userRole");
+            if (roleCheck == "Sales Manager")
+            {
+                var uId = HttpContext.Session.GetString("userId");
+                SalesManagerId = Int32.Parse(uId);
+            }
             //var ord=await orderasyncrepo.GetOrderById(id);
-            var ord = await orderasyncrepo.GetOrdersForAdminUpdate(id);
+            var ord = await orderasyncrepo.GetOrdersForAdminUpdate(SalesManagerId, Sub_DivisionId, id);
+
             return View(ord);
         }
 
@@ -170,7 +179,7 @@ namespace EcommerceProject.Controllers
         {
             try
             {
-               
+
                 var uId = HttpContext.Session.GetString("userId");
                 var UserId = Int32.Parse(uId);
                 updateorder.ModifiedBy = UserId;
@@ -194,13 +203,13 @@ namespace EcommerceProject.Controllers
 
                 var uId = HttpContext.Session.GetString("userId");
                 long UserId = Int32.Parse(uId);
-               
-                
+
+
 
                 var ord = await orderasyncrepo.UpdateOrdreByCustomer(Id, UserId);
 
                 var roleCheck = HttpContext.Session.GetString("userRole");
-                if(roleCheck!="Admin")
+                if (roleCheck != "Admin")
                 {
                     return RedirectToAction(nameof(GetMyOrders));
                 }

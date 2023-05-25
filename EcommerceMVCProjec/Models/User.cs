@@ -2,7 +2,7 @@
 
 namespace EcommerceProject.Models
 {
-    public class User:BaseModel
+    public class User : BaseModel
     {
         public long Id { get; set; }
         public string UserName { get; set; }
@@ -30,7 +30,7 @@ namespace EcommerceProject.Models
         public string MobileNo { get; set; }
         public string Gender { get; set; }
         public string Password { get; set; }
-        public DateTime DateOfBirth { get; set; }    
+        public DateTime DateOfBirth { get; set; }
         public long RoleId { get; set; }
         public string Role { get; set; }
         public string DistrictName { get; set; }
@@ -59,7 +59,7 @@ namespace EcommerceProject.Models
         public double WalletBalance { get; set; }
     }
 
-    public class GetUserLogInModel 
+    public class GetUserLogInModel
     {
         public long Id { get; set; }
         public string UserName { get; set; }
@@ -71,13 +71,13 @@ namespace EcommerceProject.Models
         public string Role { get; set; }
         public double WalletBalance { get; set; }
     }
-    public class AssignLocationModel:BaseModel
+    public class AssignLocationModel : BaseModel
     {
-       // insert into tblAssignLocation(SalesMagerId, DistrictId, CreatedBy, CreatedDate, IsDeleted) values(@SalesMagerId, @DistrictId, @CreatedBy, @CreatedDate,0)
+        // insert into tblAssignLocation(SalesMagerId, DistrictId, CreatedBy, CreatedDate, IsDeleted) values(@SalesMagerId, @DistrictId, @CreatedBy, @CreatedDate,0)
 
         public long SalesManagerId { get; set; }
-        public long DistrictId { get; set; } 
-   
+        public long DistrictId { get; set; }
+
     }
     public class GetNetworkSalesManagerModel
     {
@@ -92,13 +92,21 @@ namespace EcommerceProject.Models
         public string Sub_DivisionsName { get; set; }
         public List<SubDivisionModel> subdivisionlist { get; set; }
         public List<DistrictModel> districtmodel { get; set; }
-        public List<UserRegistrationModel> deliveryboylist  { get; set; }
+        public List<UserRegistrationModel> deliveryboylist { get; set; }
     }
-    public class AssiginDeliveryBoyModel:BaseModel
+    public class AssiginDeliveryBoyModel : BaseModel
     {
         ////SalesManagerId,DeliveryBoyId,tblSub_DivisionId
         public long SalesManagerId { get; set; }
         public long DeliveryBoyId { get; set; }
+        public long Sub_DivisionId { get; set; }
+
+    }
+    public class DeliveryBoyListModel
+    {
+        public long DeliveryBoyId { get; set; }
+
+        public string UserName { get; set; }
         public long Sub_DivisionId { get; set; }
 
     }

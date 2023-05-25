@@ -1,7 +1,7 @@
 ﻿
 namespace EcommerceProject.Models
 {
-    public class Order:BaseModel
+    public class Order : BaseModel
     {
         //Id,CustomerId,ProductId,TotalAmmount,OrderStatus,BillingAddress,ShippingAddress,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,IsDeleted
         public long Id { get; set; }
@@ -13,8 +13,8 @@ namespace EcommerceProject.Models
         public string ShippingAddress { get; set; }
         public long Quantity { get; set; }
         public string MobileNo { get; set; }
-        
-      
+
+
     }
     public class GetOrder : BaseModel
     {
@@ -53,15 +53,16 @@ namespace EcommerceProject.Models
         public string OrderStatus { get; set; }
         public long OrderQuantity { get; set; }
         public long Available_Products { get; set; }
-        public string DistrictName { get; set; }
-        public string SalesManagerName { get; set; }
+        public long Sub_DivisionId { get; set; }
+        public string Sub_DivisionsName { get; set; }
+        public List<DeliveryBoyListModel> DeliveryBoys { get; set; }
 
 
     }
-    public class UpdateOrderBillingAddress 
+    public class UpdateOrderBillingAddress
     {
         //CustomerId,ProductId,TotalAmmount,OrderStatus,BillingAddress,ModifiedBy
-       // ProductId,ProductName,OrderCounts,OrderStatus,OrderQuantity,Available_Products
+        // ProductId,ProductName,OrderCounts,OrderStatus,OrderQuantity,Available_Products
 
 
         public long ProductId { get; set; }
@@ -73,10 +74,14 @@ namespace EcommerceProject.Models
         public long OrderQuantity { get; set; }
         public long Available_Products { get; set; }
         public long ModifiedBy { get; set; }
+        public long? DeliveryBoyId { get; set; }
+        public long? CheckId { get; set; }
+        public long? Sub_DivisionId { get; set; }
         public DateTime ModifiedDate { get; set; }
+        public List<DeliveryBoyListModel> DeliveryBoyList { get; set; }
 
     }
-    public class AddOrderItems:BaseModel
+    public class AddOrderItems : BaseModel
     {
         //Id,CustomerId,ProductId,TotalAmmount,OrderStatus,BillingAddress,ShippingAddress,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,IsDeleted
         public long Id { get; set; }
