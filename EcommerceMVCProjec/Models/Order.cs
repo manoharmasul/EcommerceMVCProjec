@@ -46,6 +46,8 @@ namespace EcommerceProject.Models
         //Id,CustomerId,ProductId,TotalAmmount,OrderStatus,BillingAddress,ShippingAddress,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,IsDeleted
         //ProductId,ProductName,OrderCounts,OrderStatus,OrderQuantity,Available_Products
         //SrNo,ProductId,ProductName,OrderCounts,OrderStatus,OrderQuantity,Available_Products
+
+        //SrNo,ProductId,ProductName,TotalAmmount,Quantity
         public long SrNo { get; set; }
         public long ProductId { get; set; }
         public string ProductName { get; set; }
@@ -54,6 +56,9 @@ namespace EcommerceProject.Models
         public long OrderQuantity { get; set; }
         public long Available_Products { get; set; }
         public long Sub_DivisionId { get; set; }
+        public long RoleChekcId { get; set; }
+        public long TotalAmmount { get; set; }
+        public long DeliveryBoyId { get; set; }
         public string Sub_DivisionsName { get; set; }
         public List<DeliveryBoyListModel> DeliveryBoys { get; set; }
 

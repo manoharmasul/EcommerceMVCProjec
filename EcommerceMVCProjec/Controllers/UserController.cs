@@ -207,6 +207,7 @@ namespace EcommerceProject.Controllers
                     HttpContext.Session.SetString("userName", user.UserName);
                     HttpContext.Session.SetString("userId", user.Id.ToString());
                     HttpContext.Session.SetString("userRole", user.Role);
+                    HttpContext.Session.SetString("roleId", user.RoleId.ToString());
                     ViewBag.user = user.UserName;
 
                     if (user.Role == "Admin")

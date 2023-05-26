@@ -11,7 +11,7 @@ namespace EcommerceProject.Repository.Interface
         Task<long> UpdateOrdreByCustomer(long Id, long ModifiedBy);
         Task<long> UpdateOrderStatuss(UpdateOrderStatus updateordstatus);
         Task<List<GetOrder>> GetMyOrders(long userid);
-        Task<List<GetAllOrdersForAdmin>> GetAllOrders(long? SalesManagerId);
+        Task<List<GetAllOrdersForAdmin>> GetAllOrders(long? SalesManagerId,long? rolecheckId);
         Task<Order> GetOrderById(long id);
         Task<UpdateOrderBillingAddress> GetOrdersForAdminUpdate(long? SalesManagerId, long? Sub_DivisionId, long productId);
 

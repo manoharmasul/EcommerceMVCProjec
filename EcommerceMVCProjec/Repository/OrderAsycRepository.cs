@@ -15,25 +15,27 @@ namespace EcommerceProject.Repository
             this.context = context;
         }
 
-        public async Task<List<GetAllOrdersForAdmin>> GetAllOrders(long? SalesManagerId)
+        public async Task<List<GetAllOrdersForAdmin>> GetAllOrders(long? SalesManagerId, long? rolecheckId)
         {
+            string query;
             List<GetAllOrdersForAdmin> alladminorderlist = new List<GetAllOrdersForAdmin>();
-
-            //SrNo,ProductId,ProductName,OrderCounts,OrderStatus,OrderQuantity,Available_Products
-            var query = @"if(@SalesManagerId=0)
+            if (rolecheckId == 0)
+            {
+                //SrNo,ProductId,ProductName,OrderCounts,OrderStatus,OrderQuantity,Available_Products
+                 query = @"if(@SalesManagerId=0)
                             begin
-	                            select   ROW_NUMBER() OVER (
-	                            Order By Os.OrderStatus
-	                            ) SrNo,
-	                            p.Id as ProductId,p.ProductName,Count(p.Id) as OrderCounts,
-	                            Os.OrderStatus,Os.Id,(select sum(Quantity) from tblOrder where ProductId=p.Id) 
-	                            as OrderQuantity,p.ProductQuantity as Available_Products from tblOrder o
-	                            inner join tblProducts p on o.ProductId=p.Id
-	                            inner join tblorderStatus os on o.OrderStatusId=os.Id
-	                            where   o.IsDeleted=0 group by p.Id,p.ProductName,
-	                            Os.OrderStatus,p.ProductQuantity,Os.Id  Order by Os.Id
+	                          select   ROW_NUMBER() OVER (
+                            Order By Os.OrderStatus
+                            ) SrNo,
+                            p.Id as ProductId,p.ProductName,Count(p.Id) as OrderCounts,
+                            Os.OrderStatus,Os.Id,(select sum(Quantity) from tblOrder where ProductId=p.Id) 
+                            as OrderQuantity,p.ProductQuantity as Available_Products from tblOrder o
+                            inner join tblProducts p on o.ProductId=p.Id
+                            inner join tblorderStatus os on o.OrderStatusId=os.Id
+                            where   o.IsDeleted=0 and o.OrderStatusId=1 group by p.Id,p.ProductName,
+                            Os.OrderStatus,p.ProductQuantity,Os.Id  Order by Os.Id
                             end 
-                            else
+                            else 
                             begin 
                                 select ROW_NUMBER() OVER (
                                 order by  sub.Id
@@ -43,13 +45,31 @@ namespace EcommerceProject.Repository
                                 where Sub.DistrictId=(Select DistrictId from tblAssignLocation 
                                 where SalesManagerId=@SalesManagerId) and o.OrderStatusId=2
                                 Group by Sub_DivisionId,Sub_DivisionsName,sub.Id,os.OrderStatus
-                            end";
-
+                            end
+                     ";
+            }
+            else
+            {
+                 query = @"	select  ROW_NUMBER() OVER (
+	                order by  p.Id) SrNo,p.Id as ProductId,p.ProductName,
+	                sum(o.TotalAmmount) as TotalAmmount,o.Quantity as OrderQuantity,sub.Sub_DivisionsName,ost.OrderStatus
+	                from tblOrder o
+	                inner join tblProducts p on o.ProductId=p.Id
+	                inner join tblDeliveryBoyOrderStatus os on o.Id=os.OrderId 
+	                inner join tblSub_Divisions sub on o.Sub_DivisionId=sub.Id
+	                inner join tblOrderStatus ost on o.OrderStatusId=ost.Id
+	                where os.DeliveryBoyId=@DeliveryBoyId and o.OrderStatusId=3 
+	                group by p.Id,p.ProductName,TotalAmmount,o.Quantity,sub.Sub_DivisionsName,ost.OrderStatus
+                     ";
+            }
             using (var connection = context.CreateConnection())
             {
-                var orders = await connection.QueryAsync<GetAllOrdersForAdmin>(query, new { SalesManagerId = SalesManagerId });
-                var deliveryboys = await connection.QueryAsync<DeliveryBoyListModel>
-                     (@"Select u.Id as DeliveryBoyId,u.UserName,
+                if (rolecheckId == 0)
+                {
+                    var orders = await connection.QueryAsync<GetAllOrdersForAdmin>(query, new { SalesManagerId = SalesManagerId });
+
+                    var deliveryboys = await connection.QueryAsync<DeliveryBoyListModel>
+                       (@"Select u.Id as DeliveryBoyId,u.UserName,
                     sub.Id as Sub_DivisionId 
                     from tblUser u 
                     inner join tblAssignDeliveryBoyTeam adbt on u.Id=adbt.DeliveryBoyId
@@ -57,13 +77,29 @@ namespace EcommerceProject.Repository
 
 
 
-                foreach (var order in orders)
+                    foreach (var order in orders)
+                    {
+                        order.RoleChekcId = 0;
+                        order.DeliveryBoys = deliveryboys.ToList();
+
+                    }
+                    
+                    return orders.ToList();
+                }
+                else
                 {
 
-                    order.DeliveryBoys = deliveryboys.ToList();
+                    var orders = await connection.QueryAsync<GetAllOrdersForAdmin>(query, new { DeliveryBoyId = SalesManagerId });
+                    foreach (var order in orders)
+                    {
+                        order.DeliveryBoyId = (long)SalesManagerId;
+                        order.RoleChekcId = (long)rolecheckId;
+                       break;
 
+                    }
+                    return orders.ToList();
                 }
-                return orders.ToList();
+              
             }
         }
 

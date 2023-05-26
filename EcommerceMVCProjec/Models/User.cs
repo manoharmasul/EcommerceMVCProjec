@@ -69,6 +69,7 @@ namespace EcommerceProject.Models
         public string MobileNo { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
+        public long RoleId { get; set; }
         public double WalletBalance { get; set; }
     }
     public class AssignLocationModel : BaseModel

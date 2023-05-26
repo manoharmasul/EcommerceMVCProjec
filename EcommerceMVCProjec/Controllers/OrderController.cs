@@ -17,14 +17,23 @@ namespace EcommerceProject.Controllers
         // GET: OrderController
         public async Task<ActionResult> GetAllOrders()
         {
+            long rolecheckId=0;
             var SalesManagerId = 0;
             var roleCheck = HttpContext.Session.GetString("userRole");
             if (roleCheck == "Sales Manager")
             {
                 var uId = HttpContext.Session.GetString("userId");
                 SalesManagerId = Int32.Parse(uId);
+               
             }
-            var resutl = await orderasyncrepo.GetAllOrders(SalesManagerId);
+            else if(roleCheck == "Delivery Boy")
+            {
+                var uId = HttpContext.Session.GetString("userId");
+                SalesManagerId = Int32.Parse(uId);
+                var xx = HttpContext.Session.GetString("roleId");
+                rolecheckId=Int32.Parse(xx);
+            }
+            var resutl = await orderasyncrepo.GetAllOrders(SalesManagerId, rolecheckId);
             return View(resutl);
         }
         public async Task<ActionResult> GetMyOrders(long userId)

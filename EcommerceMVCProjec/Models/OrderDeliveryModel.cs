@@ -1,10 +1,12 @@
 ﻿namespace EcommerceProject.Models
 {
-    public class OrderDeliveryModel
+    public class OrderDeliveryModel:BaseModel
     {
-        public long DeliveryBoy { get; set; }
+        //DeliveryBoyId,OrderId,OrderStatusId,CreatedBy,CreatedDate,IsDeleted
+        public long DeliveryBoyId { get; set; }    
         public long OrderId { get; set; }
-        public long DeliveryBoyId { get; set; }
-        public long AssignByOrAcceptedBy { get; set; }
+        public long OrderStatusId { get; set; }
+        public bool IsAccepted { get; set; }
+        public long Sub_DivisionId { get; set; }
     }
 }

@@ -8,8 +8,11 @@
 <br />
 <br />
 @{
+    var count = 0;
+    long DeliveryBoyId = 0;
     List<DeliveryBoyListModel> deliveryboylist = new List<DeliveryBoyListModel>();
     string check = "Not";
+    long rolechekingId = 0;
     foreach (var item in Model.ToList())
     {
         deliveryboylist = item.DeliveryBoys;
@@ -17,166 +20,286 @@
         {
             check = item.Sub_DivisionsName;
         }
+        if(count==0)
+        {
+            DeliveryBoyId = item.DeliveryBoyId;
+            rolechekingId =item.RoleChekcId;
+            count++;
+        }
     }
-    if (check == "Not")
+    if (rolechekingId == 0)
     {
-        <div class="container-fluid">
-            <div class="sales-boxes">
-                <div class="recent-sales box">
-                    <div class="title text-center mb-3">All Orders</div>
-                    <div class="sales-details">
-                        <table class="table table-striped table-hover">
-                            <thead class="text-center">
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.SrNo)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.ProductId)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.ProductName)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OrderCounts)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OrderStatus)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OrderQuantity)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Available_Products)
-                                    </th>
-                                    <th>
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.SrNo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ProductId)
-                                        </td>
-                                        <td class="">
-                                            @Html.DisplayFor(modelItem => item.ProductName)
-                                        </td>
-                                        <td class="">
-                                            @Html.DisplayFor(modelItem => item.OrderCounts)
-                                        </td>
-                                        <td class="">
-                                            @Html.DisplayFor(modelItem => item.OrderStatus)
-                                        </td>
-                                        <td class="">
-                                            @Html.DisplayFor(modelItem => item.OrderQuantity)
-                                        </td>
-                                        <td class="">
-                                            @Html.DisplayFor(modelItem => item.Available_Products)
-                                        </td>
-                                        <td>
-                                            @Html.ActionLink("", "UpdateOrder", new { Sub_Divisionid = item.Sub_DivisionId, id = item.ProductId }, new { @class = "btn fa fa-edit", style = "font-size:40px;color:DodgerBlue" })
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+        if (check == "Not")
+        {
+    <div class="container-fluid">
+                    <div class="sales-boxes">
+                        <div class="recent-sales box">
+                            <div class="title text-center mb-3">All Orders</div>
+                            <div class="sales-details">
+                                <table class="table table-striped table-hover">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.SrNo)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.ProductId)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.ProductName)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.OrderCounts)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.OrderStatus)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.OrderQuantity)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Available_Products)
+                                            </th>
+                                            <th>
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        @foreach (var item in Model)
+                                    {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SrNo)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ProductId)
+                                                </td>
+                                                <td class="">
+                                                    @Html.DisplayFor(modelItem => item.ProductName)
+                                                </td>
+                                                <td class="">
+                                                    @Html.DisplayFor(modelItem => item.OrderCounts)
+                                                </td>
+                                                <td class="">
+                                                    @Html.DisplayFor(modelItem => item.OrderStatus)
+                                                </td>
+                                                <td class="">
+                                                    @Html.DisplayFor(modelItem => item.OrderQuantity)
+                                                </td>
+                                                <td class="">
+                                                    @Html.DisplayFor(modelItem => item.Available_Products)
+                                                </td>
+                                                <td>
+                                                    @Html.ActionLink("", "UpdateOrder", new { Sub_Divisionid = item.Sub_DivisionId, id = item.ProductId }, new { @class = "btn fa fa-edit", style = "font-size:40px;color:DodgerBlue" })
+                                                </td>
+                                            </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
+    </div>
+        }
+        else
+        {
+    <div class="container-fluid">
+                    <div class="sales-boxes">
+                        <div class="recent-sales box">
+                            <div class="title text-center mb-3">All Orders</div>
+                            <div class="sales-details">
+                                <table class="table table-striped table-hover">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.SrNo)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.OrderCounts)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.OrderStatus)
+                                            </th>
+                                            @if (check != "Not")
+                                        {
+                                                <th>
+                                                    Sub_DivisionsName
+                                                </th>
+                                        }
+                                            <th>
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        @foreach (var item in Model)
+                                    {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SrNo)
+                                                </td>
+                                                <td class="">
+                                                    @Html.DisplayFor(modelItem => item.OrderCounts)
+                                                </td>
+                                                <td class="">
+                                                    @Html.DisplayFor(modelItem => item.OrderStatus)
+                                                </td>
+                                                @if (check != "Not")
+                                            {
+                                                    <td class="">
+                                                        @Html.DisplayFor(modelItem => item.Sub_DivisionsName)
+                                                    </td>
+                                            }
+                                                <td>
+                                                    <button class="btn btn-primary m-2 mb-3 assign-area" data-bs-toggle="modal" data-bs-target="#myModalone" data-id="@item.Sub_DivisionId">Dispatched  <i class="fa fa-edit" style="font-size:15px"></i></button>
+                                                </td>
+                                            </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+
+              <div class="modal" id="myModalone">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Assign Area</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <!-- Add your form elements here -->
+
+                                <form action="/AssignOrderToDeliveryBoy/AssignOrderToDeliver" method="post">
+                                    <input type="number" class="form-control mb-3" id="Sub_DivisionId" name="Sub_DivisionId" hidden>
+                                    <label for="DeliveryBoyId" class="form-label">Select DeliveryBoyId</label>
+                                    <select class="form-select form-control" name="DeliveryBoyId" id="getid">
+                                        <option value="">select District First</option>
+                                    </select>
+                                    <hr />
+                                    <button class="btn btn-danger mt-3" data-bs-dismiss="modal" style="float:left">Cancel</button>
+                                    <button type="submit" class="btn btn-primary mt-3" data-bs-dismiss="modal" style="float:right" >Assign</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+        }
     }
     else
     {
-        <div class="container-fluid">
-            <div class="sales-boxes">
-                <div class="recent-sales box">
-                    <div class="title text-center mb-3">All Orders</div>
-                    <div class="sales-details">
-                        <table class="table table-striped table-hover">
-                            <thead class="text-center">
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.SrNo)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OrderCounts)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OrderStatus)
-                                    </th>
-                                    @if (check != "Not")
-                                    {
-                                        <th>
-                                            Sub_DivisionsName
-                                        </th>
-                                    }
-                                    <th>
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                @foreach (var item in Model)
-                                {
+    <div class="container-fluid">
+                <div class="sales-boxes">
+                    <div class="recent-sales box">
+                        <div class="title text-center mb-3">All Orders</div>
+                        <div class="sales-details">
+                        <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <table class="table table-striped table-hover">
+                                <thead class="text-center">
                                     <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.SrNo)
-                                        </td>
-                                        <td class="">
-                                            @Html.DisplayFor(modelItem => item.OrderCounts)
-                                        </td>
-                                        <td class="">
-                                            @Html.DisplayFor(modelItem => item.OrderStatus)
-                                        </td>
-                                        @if (check != "Not")
-                                        {
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.SrNo)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ProductName)
+                                        </th>                      
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.OrderQuantity)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Sub_DivisionsName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.OrderStatus)
+                                        </th>
+                                 
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    @foreach (var item in Model)
+                                {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SrNo)
+                                            </td>
+                                            <td class="">
+                                                @Html.DisplayFor(modelItem => item.ProductName)
+                                            </td>
+                                        
+                                            <td class="">
+                                                @Html.DisplayFor(modelItem => item.OrderQuantity)
+                                            </td>
                                             <td class="">
                                                 @Html.DisplayFor(modelItem => item.Sub_DivisionsName)
                                             </td>
-                                        }
-                                        <td>
-                                            <button class="btn btn-primary m-2 mb-3 assign-area" data-bs-toggle="modal" data-bs-target="#myModalone" data-id="@item.Sub_DivisionId">Dispatched  <i class="fa fa-edit" style="font-size:15px"></i></button>
-                                        </td>
-                                    </tr>
+                                            <td class="">
+                                                @Html.DisplayFor(modelItem => item.OrderStatus)
+                                            </td>
+                                           
+                                        </tr>
                                 }
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                  <div class="row">
+                  <div class="col-1"></div>
+                <div class="col"><a asp-action="GetAllOrders" asp-controller="Order" class="btn btn-danger mt-3">Reject Orders</a>                </div>
+                  <div class="col"></div>       
+                  <div class="col">
+                    <button class="btn btn-primary mt- 3 mb-3 assign-area" data-bs-toggle="modal" data-bs-target="#myModalone" data-id="@DeliveryBoyId" style="float:right">Dispatched  <i class="fa fa-edit"></i></button>
+                </div>                       
+                <div class="col-1"></div>
+                  </div>
 
-        <div class="modal" id="myModalone">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Assign Area</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <!-- Add your form elements here -->
-                        <form asp-action="AssignLocationToManager">
-                            <input type="number" class="form-control mb-3" id="Sub_DivisionId" name="Sub_DivisionId" hidden>
-                            <label for="DeliveryBoyId" class="form-label">Select DeliveryBoyId</label>
-                            <select class="form-select form-control" name="DeliveryBoyId" id="getid">
-                                <option value="">select District First</option>
-                            </select>
-                            <hr />
-                            <button class="btn btn-danger mt-3" data-bs-dismiss="modal" style="float:left">Cancel</button>
-                            <button type="submit" class="btn btn-primary mt-3" data-bs-dismiss="modal" style="float:right">Assign</button>
-                        </form>
+            <div class="modal" id="myModalone">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">                           
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                        <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                                    Are Sure To Accept The Orders ....!
+                        </div>                          
+                        <div class="col-2"></div>
+                        </div>
+                            
+
+                            <form action="/AssignOrderToDeliveryBoy/AssignOrderToDeliver" method="post">
+                                <input type="number" class="form-control mb-3" id="DeliveryBoyId" name="DeliveryBoyId" value="@DeliveryBoyId" hidden>
+                               
+                                
+                                <div class="row">
+                                <div class="col">
+                                        <a asp-action="GetAllOrders" asp-controller="Order" class="btn btn-danger mt-3">Reject</a>
+                                    </div>
+                                <div class="col"></div>
+                                <div class="col">
+                                        <div class="col"> <button type="submit" class="btn btn-primary mt-3" data-bs-dismiss="modal" style="float:right">Confirmed</button></div>
+                                </div>                                
+                                </div>                                                        
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
     }
 }
 
