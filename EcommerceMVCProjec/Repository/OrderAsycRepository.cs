@@ -265,7 +265,7 @@ namespace EcommerceProject.Repository
 
             using (var connection = context.CreateConnection())
             {
-                updateordstatus.OrderStatusId = 4;
+                updateordstatus.OrderStatusId = 6;
                 var result = await connection.ExecuteAsync(query, updateordstatus);
 
                 return result;
@@ -302,6 +302,7 @@ namespace EcommerceProject.Repository
         public async Task<long> UpdateOrdreByCustomer(long Id, long ModifiedBy)
         {
             var query = @"update  tblOrder set OrderStatus='Delivered',ModifiedBy=@ModifiedBy,ModifiedDate=Getdate(),DeliveryDate=getDate() where Id=@Id";
+            
             using (var connection = context.CreateConnection())
             {
                 var result = await connection.ExecuteAsync(query, new { Id = Id, ModifiedBy = ModifiedBy });

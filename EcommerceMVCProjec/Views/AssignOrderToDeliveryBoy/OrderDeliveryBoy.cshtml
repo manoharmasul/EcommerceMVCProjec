@@ -1,0 +1,87 @@
+﻿@model IEnumerable<EcommerceProject.Models.GetOrderDelliveryBoy>
+
+@{
+    ViewData["Title"] = "OrderDeliveryBoy";
+}
+
+<h1>OrderDeliveryBoy</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DistrictName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sub_DivisionsName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShippingAddress)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.AcceptedDate)
+            </th>
+            <th>
+                OrderDate
+            </th>
+         
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DistrictName)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Sub_DivisionsName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShippingAddress)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcceptedDate)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+           
+            <td>
+                    @Html.ActionLink("Hand Over", // <-- Link text
+
+                "OrderDeliveryredToCustomer",
+
+                // <-- Action Method Name
+
+                new { OrderId=item.OrderId}, // <-- Route arguments
+
+                new {@class="btn btn-outline-primary", data_val="abc"}  // <-- htmlArguments
+
+                )
+              
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

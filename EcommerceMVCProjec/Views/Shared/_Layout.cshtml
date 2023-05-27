@@ -586,7 +586,138 @@
         <script src="~/js/site.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)
     }
-    @if (!String.IsNullOrEmpty(Context.Request.HttpContext.Session.GetString("userName")) && (Context.Request.HttpContext.Session.GetString("userRole")) == "Admin")
+    @if (!String.IsNullOrEmpty(Context.Request.HttpContext.Session.GetString("userName")) && (Context.Request.HttpContext.Session.GetString("userRole")) == "Admin" || (Context.Request.HttpContext.Session.GetString("userRole")=="Manager"))
+    {
+        <div class="sidebar" id="slide">
+            <div class="logo-details">
+                <i class='bx bxl-c-plus-plus'></i>
+                <span class="logo_name">Shop Now</span>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a class="" asp-area="" asp-controller="Product" asp-action="OrderContSales">
+                        <i class="fa fa-home" style="font-size:24px"></i>
+                        <span class="links_name">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="" asp-area="" asp-controller="Product" asp-action="Index">
+                        <i class='bx bx-box'></i>
+                        <span class="links_name">Product</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="" asp-area="" asp-controller="Order" asp-action="GetAllOrders">
+                        <i class='bx bx-list-ul'></i>
+                        <span class="links_name">Orders</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-pie-chart-alt-2'></i>
+                        <span class="links_name">Analytics</span>
+                    </a>
+                </li>
+                @*<li>
+            <a href="#">
+            <i class='bx bx-coin-stack'></i>
+            <span class="links_name">Stock</span>
+            </a>
+            </li>
+            *@
+                <li>
+                    <a asp-action="UpdateWalletbalance" asp-controller="User">
+                        <i class='bx bx-wallet'></i>
+                        <span class="links_name">My Wallet</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="" asp-area="" asp-controller="User" asp-action="GetAllUserModelManagerOther">
+                        <i class='bx bx-user'></i>
+                        <span class="links_name">Team</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="" asp-area="" asp-controller="Attendance" asp-action="GetAttendanceRecord">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        <span class="links_name">Attendance</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-message'></i>
+                        <span class="links_name">Messages</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="" asp-area="" asp-controller="Cart" asp-action="ViewCart">
+
+                        <i class='bx bx-cart'></i>
+                        <span class="links_name">My Cart</span>
+
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-cog'></i>
+                        <span class="links_name">Setting</span>
+                    </a>
+                </li>
+                <li class="log_out">
+                    <a asp-area="" asp-controller="User" asp-action="LogOut">
+                        <i class='bx bx-log-out'></i>
+                        <span class="links_name">Log out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <section class="home-section">
+            <nav>
+                <div class="sidebar-button">
+                    <i class='bx bx-menu sidebarBtn'></i>
+                    <span class="dashboard">Dashboard</span>
+                </div>
+
+                <div class="profile-details">
+                    <!--<img src="images/profile.jpg" alt="">-->
+                    <span class="admin_name"> <i class="fa fa-user-circle" aria-hidden="true"></i>    @Context.Request.HttpContext.Session.GetString("userName")</span>
+                </div>
+            </nav>
+
+
+            <div class="container-fluid mb-3">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+
+            <footer class="footer text-muted">
+            </footer>
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+            @await RenderSectionAsync("Scripts", required: false)
+        </section>
+
+
+
+
+
+        <script>
+            let sidebar = document.querySelector(".sidebar");
+            let sidebarBtn = document.querySelector(".sidebarBtn");
+            sidebarBtn.onclick = function () {
+                sidebar.classList.toggle("active");
+                if (sidebar.classList.contains("active")) {
+                    sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+                } else
+                    sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+            }
+        </script>
+
+    }
+    @if (!String.IsNullOrEmpty(Context.Request.HttpContext.Session.GetString("userName")) && (Context.Request.HttpContext.Session.GetString("userRole")) == "Sales Manager")
     {
         <div class="sidebar" id="slide">
             <div class="logo-details">
@@ -833,8 +964,7 @@
         </script>
 
     }
-
-    @if (!String.IsNullOrEmpty(Context.Request.HttpContext.Session.GetString("userName")) && (Context.Request.HttpContext.Session.GetString("userRole")) != "Customer" && (Context.Request.HttpContext.Session.GetString("userRole")) != "Admin")
+    @if (!String.IsNullOrEmpty(Context.Request.HttpContext.Session.GetString("userName")) && (Context.Request.HttpContext.Session.GetString("userRole")) == "Delivery Boy")
     {
         <div class="sidebar" id="slide">
             <div class="logo-details">
@@ -852,6 +982,12 @@
                     <a class="" asp-area="" asp-controller="Product" asp-action="Index">
                         <i class='bx bx-box'></i>
                         <span class="links_name">Product</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="" asp-area="" asp-controller="AssignOrderToDeliveryBoy" asp-action="OrderDeliveryBoy">
+                        <i class='bx bx-list-ul'></i>
+                        <span class="links_name">Accepted Order</span>
                     </a>
                 </li>
                 <li>
@@ -965,5 +1101,6 @@
         </script>
 
     }
+
 </body>
 </html>
